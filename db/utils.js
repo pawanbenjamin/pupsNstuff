@@ -1,5 +1,5 @@
 function mapTheRows(rows) {
-  const map = {}
+  const map = {};
 
   for (const row of rows) {
     if (!map[row.id]) {
@@ -11,23 +11,23 @@ function mapTheRows(rows) {
         age: row.age,
         ownerId: row.ownerId,
         tricks: [],
-      }
+      };
       if (row.trick_id) {
         map[row.id].tricks.push({
-          trick_id: row.trick_id,
+          id: row.trick_id,
           title: row.trick_title,
-        })
+        });
       }
     } else {
       map[row.id].tricks.push({
-        trick_id: row.trick_id,
+        id: row.trick_id,
         title: row.trick_title,
-      })
+      });
     }
   }
-  return Object.values(map)
+  return Object.values(map);
 }
 
 module.exports = {
   mapTheRows,
-}
+};

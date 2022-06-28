@@ -58,16 +58,6 @@ const deleteOwnerById = async (id) => {
   return rows[0];
 };
 
-// const test = async () => {
-//   client.connect();
-//   console.log("hi");
-//   const owners = await updateOwnerById(1, { name: "Rickljasd" });
-//   console.log("Owners", owners);
-//   client.end();
-// };
-
-// test();
-
 module.exports = {
   createOwner,
   getOwners,

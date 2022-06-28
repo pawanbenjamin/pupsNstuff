@@ -13,31 +13,35 @@ const createPuppy = async (puppy) => {
   );
 };
 
-const getPuppies = async () => {
-  const { rows } = await client.query(`
-      SELECT 
-        puppies.id as id,
-        puppies.name as name,
-        puppies.email as email,
-        puppies."isCute" as "isCute",
-        puppies.age as age,
-        puppies."ownerId" as "ownerId"
-      FROM puppies
-      LEFT JOIN puppies_tricks ON puppies.id = puppies_tricks.puppy_id
-      LEFT JOIN tricks ON puppies_tricks.trick_id = tricks.id
-    `);
-  return mapTheRows(rows);
-};
-
 const getPuppyById = async (id) => {
-  const { rows } = await client.query(
+  const {
+    rows: [pup],
+  } = await client.query(
     `
-    SELECT * FROM puppies
+    SELECT
+      puppies.id as id,
+      puppies.name as name,
+      puppies.email as email,
+      puppies."isCute" as "isCute",
+      puppies.age as age,
+      puppies."ownerId" as "ownerId",
+    CASE WHEN puppies_tricks.puppy_id IS NULL THEN '[]'::json
+    ELSE
+    JSON_AGG(
+      JSON_BUILD_OBJECT(
+        'id', tricks.id,
+        'title', tricks.title
+      )
+    ) END AS tricks
+    FROM puppies
+    LEFT JOIN puppies_tricks ON puppies.id = puppies_tricks.puppy_id
+    LEFT JOIN tricks ON puppies_tricks.trick_id = tricks.id
     WHERE puppies.id = $1
+    GROUP BY puppies.id, puppies_tricks.puppy_id
   `,
     [id]
   );
-  return mapTheRows(rows)[0];
+  return pup;
 };
 
 const updatePuppyById = async (id, updateObject) => {
@@ -74,30 +78,29 @@ const deletePuppyById = async (id) => {
 // ** THE FOLLOWING IS AN EXAMPLE OF A MORE ADVANCED QUERY WITHOUT USING A UTILITY FUNCTION
 // ** THIS FUNCTION USES JSON_AGG AND JSON_BUILD_OBJ TO RETURN THE DATA IN THE SAME FORMAT
 // ** ORM'S DO THIS JOB FOR US USUALLY
-// const getPuppies = async () => {
-
-//   const { rows } = await client.query(`
-//     SELECT
-//       puppies.id as id,
-//       puppies.name as name,
-//       puppies.email as email,
-//       puppies."isCute" as "isCute",
-//       puppies.age as age,
-//       puppies."ownerId" as "ownerId",
-//     CASE WHEN puppies_tricks.puppy_id IS NULL THEN '[]'::json
-//     ELSE
-//     JSON_AGG(
-//       JSON_BUILD_OBJECT(
-//         'trick_id', tricks.id,
-//         'title', tricks.title
-//       )
-//     ) END AS tricks
-//     FROM puppies
-//     LEFT JOIN puppies_tricks ON puppies.id = puppies_tricks.puppy_id
-//     LEFT JOIN tricks ON puppies_tricks.trick_id = tricks.id
-//     GROUP BY puppies.id, puppies_tricks.puppy_id`)
-//   return rows
-// }
+const getPuppies = async () => {
+  const { rows } = await client.query(`
+    SELECT
+      puppies.id as id,
+      puppies.name as name,
+      puppies.email as email,
+      puppies."isCute" as "isCute",
+      puppies.age as age,
+      puppies."ownerId" as "ownerId",
+    CASE WHEN puppies_tricks.puppy_id IS NULL THEN '[]'::json
+    ELSE
+    JSON_AGG(
+      JSON_BUILD_OBJECT(
+        'id', tricks.id,
+        'title', tricks.title
+      )
+    ) END AS tricks
+    FROM puppies
+    LEFT JOIN puppies_tricks ON puppies.id = puppies_tricks.puppy_id
+    LEFT JOIN tricks ON puppies_tricks.trick_id = tricks.id
+    GROUP BY puppies.id, puppies_tricks.puppy_id`);
+  return rows;
+};
 
 module.exports = {
   createPuppy,
