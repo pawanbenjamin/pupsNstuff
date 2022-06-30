@@ -8,14 +8,6 @@ const {
   createPuppy,
 } = require("../../db/adapters/puppies");
 
-// router.get("/", async (req, res, next) => {
-//   try {
-//     const puppies = await getPuppies();
-//     res.send(puppies);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 router.post(
   "/",
   asyncErrorHandler(async (req, res, next) => {
