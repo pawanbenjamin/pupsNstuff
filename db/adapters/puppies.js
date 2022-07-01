@@ -4,13 +4,17 @@ const { mapTheRows } = require("../utils");
 const createPuppy = async (puppy) => {
   // Add a puppy (passed in) to our db
   const { name, email, age, ownerId } = puppy;
-  await client.query(
+  const {
+    rows: [pup],
+  } = await client.query(
     `
     INSERT INTO puppies (name, email, age, "ownerId")
     VALUES ($1, $2, $3, $4)
+    RETURNING *
   `,
     [name, email, age, ownerId]
   );
+  return pup;
 };
 
 const getPuppyById = async (id) => {

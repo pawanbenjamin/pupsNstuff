@@ -12,6 +12,7 @@ router.post(
   "/",
   asyncErrorHandler(async (req, res, next) => {
     const createdPup = await createPuppy(req.body);
+    console.log({ createdPup });
     res.send(createdPup);
   })
 );
