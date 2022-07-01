@@ -78,7 +78,6 @@ const seedDb = async () => {
 };
 
 const rebuildDb = async () => {
-  client.connect();
   try {
     await dropTables();
     await createTables();
