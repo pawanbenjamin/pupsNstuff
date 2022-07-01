@@ -11,6 +11,18 @@ function asyncErrorHandler(callback) {
   };
 }
 
+function authRequired(req, res, next) {
+  const auth = req.header("Authorization");
+  if (!auth) {
+    next({
+      name: "Authorization Error!",
+      message: "You must pass an Authorization token in your header!",
+    });
+  }
+  next();
+}
+
 module.exports = {
   asyncErrorHandler,
+  authRequired,
 };

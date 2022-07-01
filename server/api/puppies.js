@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { asyncErrorHandler } = require("../utils");
+const { asyncErrorHandler, authRequired } = require("../utils");
 const {
   getPuppies,
   getPuppyById,
@@ -10,9 +10,11 @@ const {
 
 router.post(
   "/",
+  authRequired,
   asyncErrorHandler(async (req, res, next) => {
     const createdPup = await createPuppy(req.body);
     console.log({ createdPup });
+
     res.send(createdPup);
   })
 );

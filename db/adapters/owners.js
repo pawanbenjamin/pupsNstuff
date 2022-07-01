@@ -2,13 +2,17 @@ const client = require("../client");
 
 const createOwner = async (owner) => {
   const { name } = owner;
-  await client.query(
+  const {
+    rows: [createdOwner],
+  } = await client.query(
     `
         INSERT INTO owners (name)
         VALUES ($1)
+        RETURNING *
     `,
     [name]
   );
+  return createdOwner;
 };
 
 const getOwners = async () => {
