@@ -80,7 +80,7 @@ const getPuppiesByOwnerId = async (id) => {
 const updatePuppyById = async (id, updateObject) => {
   const setString = Object.keys(updateObject)
     .map((key, i) => {
-      return `${key}=$${i + 1}`;
+      return `${key}=$${i + 2}`;
     })
     .join(", ");
 
@@ -88,10 +88,10 @@ const updatePuppyById = async (id, updateObject) => {
     `
     UPDATE puppies
       SET ${setString}
-      WHERE id=${id}
+      WHERE id=$1
       RETURNING *
   `,
-    Object.values(updateObject)
+    [id, ...Object.values(updateObject)]
   );
   return mapTheRows(rows)[0];
 };
