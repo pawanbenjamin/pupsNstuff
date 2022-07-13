@@ -3,8 +3,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
 
-// const client = require("../db/client");
-// client.connect();
+const client = require("../db/client");
+client.connect();
 
 app.use(cors());
 app.use(morgan("tiny"));

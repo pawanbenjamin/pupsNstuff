@@ -78,6 +78,7 @@ const seedDb = async () => {
 };
 
 const rebuildDb = async () => {
+  client.connect();
   try {
     await dropTables();
     await createTables();
@@ -91,6 +92,8 @@ const rebuildDb = async () => {
     // console.log('Tricks:', tricks)
   } catch (error) {
     console.error(error);
+  } finally {
+    client.end();
   }
 };
 
