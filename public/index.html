@@ -11,9 +11,12 @@
     <header>
       <h1>Welcome to Pups 'n Stuff</h1>
       <h4>
-        A simple CRUD app with Express and PG to server all your CRUD-ding needs
+        A simple CRUD API built with Express and PG to serve all your CRUD-ding
+        needs
       </h4>
     </header>
+    <h3>Endpoints:</h3>
+    <hr />
     <section class="puppies">
       <div>
         <h4>GET /api/puppies</h4>
@@ -31,6 +34,7 @@
         <h4>DELETE /api/puppies/:id</h4>
       </div>
     </section>
+    <hr />
     <section class="owners">
       <div>
         <h4>GET /api/owners</h4>
@@ -45,6 +49,34 @@
         <h4>DELETE /api/owners/:id</h4>
       </div>
     </section>
-    <section class="tricks">Tricks</section>
+    <hr />
+    <section class="tricks">
+      <div>
+        <h4>GET /api/tricks</h4>
+      </div>
+      <div>
+        <h4>GET /api/ticks/:id</h4>
+      </div>
+      <div>
+        <h4>POST /api/tricks</h4>
+      </div>
+      <div>
+        <h4>PATCH /api/tricks/:id</h4>
+      </div>
+      <div>
+        <h4>DELETE /api/tricks/:id</h4>
+      </div>
+    </section>
+    <hr />
+    <section class="puppies_tricks">
+      <div>
+        <h4>POST /api/puppies_tricks/:puppyId/:trickId</h4>
+      </div>
+      <div>
+        <h4>DELETE /api/puppies_tricks/:puppyId/:trickId</h4>
+      </div>
+    </section>
+    <hr />
+    <h2>Happy Coding! Arf Arf!</h2>
   </body>
 </html>

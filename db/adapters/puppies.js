@@ -84,7 +84,9 @@ const updatePuppyById = async (id, updateObject) => {
     })
     .join(", ");
 
-  const { rows } = await client.query(
+  const {
+    rows: [updatedPup],
+  } = await client.query(
     `
     UPDATE puppies
       SET ${setString}
@@ -93,7 +95,7 @@ const updatePuppyById = async (id, updateObject) => {
   `,
     [id, ...Object.values(updateObject)]
   );
-  return mapTheRows(rows)[0];
+  return updatedPup;
 };
 
 const deletePuppyById = async (id) => {
