@@ -1,7 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  background-color: lightgray;
+  font-family: "Open Sans", sans-serif;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0 3rem 0;
 }
 
 .code {
@@ -11,4 +26,43 @@
 
 .db-pic {
   height: 20em;
+}
+
+code {
+  color: black;
+}
+
+.code {
+  text-align: left;
+}
+
+hr {
+  margin-bottom: 1rem;
+  width: 64%;
+  margin-left: 17%;
+}
+
+.puppies,
+.owners,
+.tricks,
+.puppies_tricks,
+.title {
+  margin-left: 10rem;
+}
+
+.title {
+  margin-top: 1rem;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+}
+
+h3 {
+  margin-left: 3rem;
+  margin-bottom: 1rem;
 }
