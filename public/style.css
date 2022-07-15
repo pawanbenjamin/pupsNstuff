@@ -8,3 +8,7 @@
   max-height: 20em;
   overflow-y: scroll;
 }
+
+.db-pic {
+  height: 20em;
+}
