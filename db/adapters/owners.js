@@ -53,13 +53,16 @@ const updateOwnerById = async (id, updateObj) => {
 };
 
 const deleteOwnerById = async (id) => {
-  const { rows } = await client.query(
+  const {
+    rows: [deletedOwner],
+  } = await client.query(
     `
-      DELETE owners WHERE id=$1
+      DELETE FROM owners WHERE id=$1
+      RETURNING *
     `,
     [id]
   );
-  return rows[0];
+  return deletedOwner;
 };
 
 module.exports = {

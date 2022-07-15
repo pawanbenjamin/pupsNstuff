@@ -10,7 +10,6 @@ const {
 
 router.post(
   "/",
-  authRequired,
   asyncErrorHandler(async (req, res, next) => {
     const createdPup = await createPuppy(req.body);
     console.log({ createdPup });
@@ -41,6 +40,9 @@ router.patch(
   asyncErrorHandler(async (req, res, next) => {
     const { id } = req.params;
     const updatedPup = await updatePuppyById(id, req.body);
+    if (updatedPup?.success === false) {
+      res.status(401);
+    }
     res.send(updatedPup);
   })
 );

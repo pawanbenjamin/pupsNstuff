@@ -3,3 +3,8 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.code {
+  max-height: 20em;
+  overflow-y: scroll;
+}

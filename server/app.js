@@ -25,7 +25,7 @@ app.use((error, req, res, next) => {
   } else {
     res.status(500);
   }
-  res.send({ sucess: false, message: error.message });
+  res.send({ success: false, message: error.message });
 });
 
 module.exports = app;

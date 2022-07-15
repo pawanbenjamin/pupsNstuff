@@ -2,6 +2,8 @@ const {
   getOwners,
   getOwnerById,
   createOwner,
+  updateOwnerById,
+  deleteOwnerById,
 } = require("../../db/adapters/owners");
 const { getPuppiesByOwnerId } = require("../../db/adapters/puppies");
 const { asyncErrorHandler } = require("../utils");
@@ -12,9 +14,7 @@ router.post(
   "/",
   asyncErrorHandler(async (req, res, next) => {
     const newOwner = await createOwner(req.body);
-    const randomInt = Math.floor(Math.random() * 200);
-    const token = `Randomly-Generate-Token#${randomInt}`;
-    res.send({ newOwner, token });
+    res.send(newOwner);
   })
 );
 
@@ -42,4 +42,19 @@ router.get(
   })
 );
 
+router.patch(
+  "/:id",
+  asyncErrorHandler(async (req, res, next) => {
+    const updatedOwner = await updateOwnerById(+req.params.id, req.body);
+    res.send(updatedOwner);
+  })
+);
+
+router.delete(
+  "/:id",
+  asyncErrorHandler(async (req, res, next) => {
+    const deletedOwner = await deleteOwnerById(+req.params.id);
+    res.send(deletedOwner);
+  })
+);
 module.exports = router;

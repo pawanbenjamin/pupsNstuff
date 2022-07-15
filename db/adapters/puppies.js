@@ -78,6 +78,13 @@ const getPuppiesByOwnerId = async (id) => {
 };
 
 const updatePuppyById = async (id, updateObject) => {
+  const valuesArray = Object.keys(updateObject);
+  if (valuesArray.includes("ownerId") || valuesArray.includes("isCute")) {
+    return {
+      success: false,
+      message: "Cannot update isCute or ownerId!",
+    };
+  }
   const setString = Object.keys(updateObject)
     .map((key, i) => {
       return `${key}=$${i + 2}`;
@@ -99,7 +106,9 @@ const updatePuppyById = async (id, updateObject) => {
 };
 
 const deletePuppyById = async (id) => {
-  const { rows } = await client.query(
+  const {
+    rows: [deletedPuppy],
+  } = await client.query(
     `
     DELETE FROM puppies
     WHERE id=$1
@@ -107,7 +116,7 @@ const deletePuppyById = async (id) => {
   `,
     [id]
   );
-  return mapTheRows(rows)[0];
+  return deletedPuppy;
 };
 
 // ** THE FOLLOWING IS AN EXAMPLE OF A MORE ADVANCED QUERY WITHOUT USING A UTILITY FUNCTION
