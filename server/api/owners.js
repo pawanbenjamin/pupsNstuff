@@ -30,6 +30,14 @@ router.get(
   "/:id",
   asyncErrorHandler(async (req, res, next) => {
     const owner = await getOwnerById(req.params.id);
+    if (owner === undefined || Object.keys(owner).length === 0) {
+      res.status(404);
+      next({
+        name: "Oops!",
+        message: "No Owner with that ID found!",
+      });
+      return;
+    }
     res.send(owner);
   })
 );

@@ -31,6 +31,14 @@ router.get(
   asyncErrorHandler(async (req, res, next) => {
     const { id } = req.params;
     const singlePup = await getPuppyById(id);
+    if (singlePup === undefined || Object.keys(singlePup).length === 0) {
+      res.status(404);
+      next({
+        name: "Oops!",
+        message: "No Puppy with that ID found!",
+      });
+      return;
+    }
     res.send(singlePup);
   })
 );

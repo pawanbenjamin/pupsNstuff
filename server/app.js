@@ -19,13 +19,13 @@ app.get("/", (req, res) => {
 
 app.use("/api", require("./api"));
 
-app.use((error, req, res, next) => {
-  if (error.status) {
-    res.status(error.status);
-  } else {
-    res.status(500);
-  }
-  res.send({ success: false, message: error.message });
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.send({
+    name: err.name,
+    message: err.message,
+    stack: err.stack,
+  });
 });
 
 module.exports = app;

@@ -21,6 +21,14 @@ router.get(
   asyncErrorHandler(async (req, res, next) => {
     const id = +req.params.id;
     const trick = await getTrickById(id);
+    if (trick === undefined || Object.keys(trick).length === 0) {
+      res.status(404);
+      next({
+        name: "Oops!",
+        message: "No Trick with that ID found!",
+      });
+      return;
+    }
     res.send(trick);
   })
 );
